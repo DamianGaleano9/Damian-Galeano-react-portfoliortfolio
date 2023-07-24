@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import moment from "moment"
 
+
+import PortfolioContainer from './portfolio/portfolio-container';
+
 export default class App extends Component {
   render() {
     return (
@@ -9,7 +12,7 @@ export default class App extends Component {
         <h2>React Redux Router</h2>
        <div>{ moment().format('MMMM Do YYYY, h:mm:ss a')}</div>
        <div>{ moment().format('LTS')}</div>
-
+      <PortfolioContainer/>
       </div>
     );
   }
