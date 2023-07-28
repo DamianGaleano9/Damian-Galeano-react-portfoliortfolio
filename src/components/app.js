@@ -9,10 +9,8 @@ export default class App extends Component {
     return (
       <div className='app'>
         <h1>Damian Mazo Galeano</h1>
-        <h2>React Redux Router</h2>
-       <div>{ moment().format('MMMM Do YYYY, h:mm:ss a')}</div>
-       <div>{ moment().format('LTS')}</div>
-      <PortfolioContainer/>
+        <div>{moment().format('MMMM Do YYYY, h:mm:ss a')}</div>
+        <PortfolioContainer />
       </div>
     );
   }
