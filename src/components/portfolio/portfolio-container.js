@@ -13,6 +13,8 @@ export default class PortfolioContainer extends Component {
             {title: "ana"}]
         }
 
+        this.handlePageUpdateTitle = this.handlePageUpdateTitle.bind(this)
+
     }
 
     PortfolioItems() {
@@ -21,6 +23,11 @@ export default class PortfolioContainer extends Component {
         })
     }
 
+    handlePageUpdateTitle() {
+        this.setState({
+            pageTitle: "New Title"
+        })
+    }
 
 
     render() {
@@ -28,6 +35,8 @@ export default class PortfolioContainer extends Component {
             <div>
                 <h2>{this.state.pageTitle}</h2>
                 {this.PortfolioItems()}
+
+                <button onClick={this.handlePageUpdateTitle}>Change the Title</button>
             </div>
         )
     }
