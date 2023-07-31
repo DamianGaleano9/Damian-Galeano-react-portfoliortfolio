@@ -37,6 +37,9 @@ export default class PortfolioContainer extends Component {
 
 
     render() {
+        if(this.state.isLoading) {
+            return <div>Is loading</div>
+        }
         return (
             <div>
                 <button onClick={() => this.handlerFilter('eCommerce')}>
