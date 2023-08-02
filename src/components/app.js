@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from "moment"
 
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 
 
@@ -24,21 +24,23 @@ export default class App extends Component {
       <div className='app'>
         <Router>
           <div>
+            <h1>Damian Mazo Galeano</h1>
+            <div>{moment().format('MMMM Do YYYY, h:mm:ss a')}</div>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/about-me" component={About} />
               <Route path="/contact" component={Contact} />
               <Route path="/blog" component={Blog} />
+              <Route path="/portfolio" component={PortfolioDetail} />
+
 
             </Switch>
 
             <NavigationContainer />
           </div>
         </Router>
-        
-        <h1>Damian Mazo Galeano</h1>
-        <div>{moment().format('MMMM Do YYYY, h:mm:ss a')}</div>
-        <PortfolioContainer />
+
+
       </div>
     );
   }

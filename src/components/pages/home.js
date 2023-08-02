@@ -1,9 +1,14 @@
 import React from "react";
-
-export default function() {
-    return(
+import PortfolioContainer from "../portfolio/portfolio-container"
+export default function () {
+    return (
         <div>
-            Home
+
+            <h2>HomePage</h2>
+
+            <PortfolioContainer />
+
+
         </div>
     );
 }
