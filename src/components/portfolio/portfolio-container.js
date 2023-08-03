@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import PortfolioItem from "./portfolio-item";
+import axios from 'axios';
 
 export default class PortfolioContainer extends Component {
     constructor() {
@@ -17,6 +18,7 @@ export default class PortfolioContainer extends Component {
         };
 
         this.handlerFilter = this.handlerFilter.bind(this)
+        this.getPortfolioItems = this.getPortfolioItems.bind(this)
 
     }
 
@@ -29,6 +31,22 @@ export default class PortfolioContainer extends Component {
         })
     }
 
+    getPortfolioItems(){
+        axios.get('https://damiangaleano.devcamp.space/portfolio/portfolio_items')
+      .then(response=> {
+        // handle success
+        console.log("Response data", response);
+      })
+      .catch(error => {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+    
+      }
+
     PortfolioItems() {
         return this.state.data.map(item => {
             return <PortfolioItem title={item.title} url={"Google.com"} slug={item.slug}/>
@@ -40,6 +58,11 @@ export default class PortfolioContainer extends Component {
         if(this.state.isLoading) {
             return <div>Is loading</div>
         }
+
+        {this.PortfolioItems()}
+        {this.getPortfolioItems()}
+
+
         return (
             <div>
                 <button onClick={() => this.handlerFilter('eCommerce')}>
@@ -53,7 +76,7 @@ export default class PortfolioContainer extends Component {
                 </button>
 
                 <h2>{this.state.pageTitle}</h2>
-                {this.PortfolioItems()}
+
 
             </div>
         )
