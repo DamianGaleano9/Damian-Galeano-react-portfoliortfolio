@@ -15,12 +15,34 @@ import Contact from "./pages/contact";
 import Blog from "./pages/blog";
 import PortfolioDetail from "./portfolio/portfolio-details";
 import NoMatch from "./pages/no-match";
+import axios from 'axios';
 
 
 
 
 export default class App extends Component {
+  constructor() {
+    super();
+
+    this.getPortfolioItems = this.getPortfolioItems.bind(this)
+  }
+  getPortfolioItems(){
+    axios.get('https://damiangaleano.devcamp.space/portfolio/portfolio_items')
+  .then(response=> {
+    // handle success
+    console.log("Response data", response);
+  })
+  .catch(error => {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
+
+  }
   render() {
+    this.getPortfolioItems();
     return (
       <div className='app'>
         <Router>
