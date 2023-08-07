@@ -15,7 +15,7 @@ export default class PortfolioContainer extends Component {
         };
 
         this.handlerFilter = this.handlerFilter.bind(this);
-        // this.getPortfolioItems = this.PortfolioItems.bind(this);
+        this.getPortfolioItems = this.PortfolioItems.bind(this);
 
     }
 
@@ -46,7 +46,8 @@ export default class PortfolioContainer extends Component {
 
     PortfolioItems() {
         return this.state.data.map(item => {
-            return <PortfolioItem title={item.name} url={item.url} slug={item.id} />
+            console.log("item data", item)
+            return <PortfolioItem key={item.id} title={item.name} url={item.url} slug={item.id} />
         })
     }
 
