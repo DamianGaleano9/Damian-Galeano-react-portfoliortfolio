@@ -1,24 +1,21 @@
 import React, { Component } from "react";
+import axios from 'axios';
+
 
 import PortfolioItem from "./portfolio-item";
-import axios from 'axios';
 
 export default class PortfolioContainer extends Component {
     constructor() {
         super();
+
         this.state = {
             pageTitle: "Welcome to my Portfolio",
             isLoading: false,
-            data: [
-                { title: "Quip", category: "eCommerce", slug:'quip' },
-                { title: "Eventbrite", category: "Scheduling", slug:'eventbrite' },
-                { title: "Ministry Safe", category: "Enterprise", slug:'ministry-safe'},
-                { title: "SwingAway", category: "eCommerce", slug:'swingaway' }
-            ]
+            data: []
         };
 
-        this.handlerFilter = this.handlerFilter.bind(this)
-        this.getPortfolioItems = this.getPortfolioItems.bind(this)
+        this.handlerFilter = this.handlerFilter.bind(this);
+        // this.getPortfolioItems = this.PortfolioItems.bind(this);
 
     }
 
@@ -31,40 +28,45 @@ export default class PortfolioContainer extends Component {
         })
     }
 
-    getPortfolioItems(){
+    getPortfolioItems() {
         axios.get('https://damiangaleano.devcamp.space/portfolio/portfolio_items')
-      .then(response=> {
-        // handle success
-        console.log("Response data", response);
-      })
-      .catch(error => {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
-    
-      }
+            .then(response => {
+                // handle success
+                console.log("Response data", response);
+                this.setState({
+                    data: response.data.portfolio_items
+                })
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            });
+
+    }
 
     PortfolioItems() {
         return this.state.data.map(item => {
-            return <PortfolioItem title={item.title} url={"Google.com"} slug={item.slug}/>
+            return <PortfolioItem title={item.name} url={item.url} slug={item.id} />
         })
+    }
+
+    componentDidMount() {
+        { this.getPortfolioItems() }
+
     }
 
 
     render() {
-        if(this.state.isLoading) {
+        if (this.state.isLoading) {
             return <div>Is loading</div>
         }
 
-        {this.PortfolioItems()}
-        {this.getPortfolioItems()}
 
 
         return (
             <div>
+                <h2>{this.state.pageTitle}</h2>
+
                 <button onClick={() => this.handlerFilter('eCommerce')}>
                     eCommerce
                 </button>
@@ -74,9 +76,7 @@ export default class PortfolioContainer extends Component {
                 <button onClick={() => this.handlerFilter('Enterprise')}>
                     Enterprise
                 </button>
-
-                <h2>{this.state.pageTitle}</h2>
-
+                {this.PortfolioItems()};
 
             </div>
         )
