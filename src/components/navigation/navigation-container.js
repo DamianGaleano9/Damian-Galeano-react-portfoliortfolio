@@ -40,13 +40,12 @@ export default class NavigationContainer extends Component {
 
                     </div>
 
-                    {false ? <button>Add Blog</button> : null}
                 </div>
                 <div className="right-side">
                     Damian Mazo Galeano
                 </div>
             </div>
-        )
+        );
     }
 
 }
