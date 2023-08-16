@@ -65,26 +65,21 @@ export default class PortfolioContainer extends Component {
 
 
         return (
-            <div>
-                <h2>{this.state.pageTitle}</h2>
-
-                <button onClick={() => this.handlerFilter('eCommerce')}>
-                    eCommerce
-                </button>
-                <button onClick={() => this.handlerFilter('Scheduling')}>
-                    Scheduling
-                </button>
-                <button onClick={() => this.handlerFilter('Enterprise')}>
-                    Enterprise
-                </button>
-
 
                 <div className="portfolio-items-wrapper">
+                    <button className="btn" onClick={() => this.handlerFilter('eCommerce')}>
+                        eCommerce
+                    </button>
+                    <button className="btn" onClick={() => this.handlerFilter('Scheduling')}>
+                        Scheduling
+                    </button>
+                    <button className="btn" onClick={() => this.handlerFilter('Enterprise')}>
+                        Enterprise
+                    </button>
                     {this.PortfolioItems()};
                 </div>
 
 
-            </div>
         )
     }
 }
