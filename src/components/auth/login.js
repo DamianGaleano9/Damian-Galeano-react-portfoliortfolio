@@ -19,7 +19,6 @@ export default class Login extends Component {
         this.setState({
             [event.target.name]: event.target.value,
             errorText: ""
-
         });
     }
 
@@ -33,22 +32,21 @@ export default class Login extends Component {
             },
 
             { withCredentials: true }
-        )
-            .then(response => {
-                if (response.data.status === "created") {
-                    console.log("You can come in")
-                } else {
-                    this.setState ({
-                        errorText: "Wrong email or password"
-                    });
-                }
-            })
 
-            .catch(error => {
+
+        ).then(response => {
+            if (response.data.status === "created") {
+                console.log("You Can Come in")
+            } else {
                 this.setState({
-                    errorText: "An Error Ocurred here"
-                })
+                    errorText: "Wrong email or password"
+                });
+            }
+        }).catch(error => {
+            this.setState({
+                errorText: "An Error Ocurred here"
             })
+        })
         event.preventDefault();
     }
 
