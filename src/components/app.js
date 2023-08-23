@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-
-
 import NavigationContainer from "./navigation/navigation-container"
 import Home from "./pages/home";
 import About from "./pages/about";
@@ -12,42 +10,33 @@ import PortfolioDetail from "./portfolio/portfolio-detail";
 import Auth from "./pages/auth";
 import NoMatch from "./pages/no-match";
 
-
-
-
-
-
-
-
 export default class App extends Component {
   constructor(props){
-
     super(props);
 
     this.state={
       loggedInStatus:"NOT_LOGGED_IN"
-    }
+    };
 
-
-
-  }
+    this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
+    this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this)
+  };
 
 
   
-    handleSuccesfulLoging = () => {
+    handleSuccessfulLogin (){
       this.setState({
         loggedInStatus: "LOGGED_IN"
       })
     }
 
-    handlerUnsuccesfulLoging =() => {
+    handleUnsuccessfulLogin (){
       this.setState({
         loggedInStatus: "NOT_LOGGED_IN"
       })
     }
 
-    // this.handleSuccesfulLoging = this.handleSuccesfulLoging.bind(this);
-    // this.handlerUnsuccesfulLoging = this.handlerUnsuccesfulLoging.bind(this)
+    
 
   render() {
     return (
@@ -55,15 +44,18 @@ export default class App extends Component {
         <Router>
           <div>
             <NavigationContainer />
+            <h2>{this.state.loggedInStatus}</h2>
 
             <Switch>
               <Route exact path="/" component={Home} />
+
               <Route path="/auth" 
               
-              render={props => (<Auth
+              render={props => (
+              <Auth
                 {...props}
-                handleSuccesfulLoging= {this.handleSuccesfulLoging}
-                handlerUnsuccesfulLoging = {this.handlerUnsuccesfulLoging}
+                handleSuccessfulLogin= {this.handleSuccessfulLogin}
+                handlerUnsuccessfulLogin = {this.handlerUnsuccessfulLogin}
                 
                /> 
               )}
