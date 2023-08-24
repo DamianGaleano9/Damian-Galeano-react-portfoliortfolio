@@ -1,0 +1,14 @@
+.portfolio-manager-wrapper {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    color: $offwhite;
+
+
+    .left-column {
+        background-color: $main;
+    }
+
+    .right-column {
+        background-color: $charcoal;
+    }
+}
