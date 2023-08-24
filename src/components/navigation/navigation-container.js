@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const NavigationComponent = (props) => {
     const handleSingOut = () => {
@@ -24,8 +24,8 @@ const NavigationComponent = (props) => {
         return (
             <div className="nav-link-wrapper">
                 <div className="nav-link-wrapper">
-                    <NavLink to="/blog" activeClassName="nav-link-active">
-                        Blog
+                    <NavLink to={route} activeClassName="nav-link-active">
+                        {linkText}
                     </NavLink>
 
                 </div>
@@ -58,8 +58,15 @@ const NavigationComponent = (props) => {
                     </NavLink>
                 </div>
 
+                <div className="nav-link-wrapper">
 
-                {props.loggedInStatus === "LOGGED_IN" ? dynamyc("/blog", "Blog") : null}
+                    <NavLink to="/blog" activeClassName="nav-link-active">
+                        blog
+                    </NavLink>
+                </div>
+
+
+                {props.loggedInStatus === "LOGGED_IN" ? dynamyc("/portfolio-manager", "Portfolio Manager") : null}
 
 
             </div>
