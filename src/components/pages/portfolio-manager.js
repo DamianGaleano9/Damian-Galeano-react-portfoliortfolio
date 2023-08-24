@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import PortfolioSideBarList from "../portfolio/portfolio-sidebar-list";
+
 export default class PortfolioManager extends Component {
     constructor(){
         super()
 
         this.state={
-            portfolioItem: []
+            portfolioItems: []
         }
     }
 
@@ -14,7 +16,7 @@ export default class PortfolioManager extends Component {
         axios.get("https://jordan.devcamp.space/portfolio/portfolio_items", {withCredentials: true})
         .then(response => {
             this.setState({
-                portfolioItem: [... response.data.portfolioItem]
+                portfolioItems: [... response.data.portfolio_items]
             })
         }).catch(error => {
             console.log("Error in get portfolio", error);
@@ -32,12 +34,12 @@ export default class PortfolioManager extends Component {
             <div className="portfolio-manager-wrapper">
 
                 <div className="left-column">
-                    <h1>PortfolioManager</h1>
+                    <h1>Portfolio Form</h1>
                 </div>
 
 
                 <div className="right-column">
-                    <h1>PortfolioManager</h1>
+                <PortfolioSideBarList data={this.state.portfolioItems} />
                 </div>
             </div>
         )
