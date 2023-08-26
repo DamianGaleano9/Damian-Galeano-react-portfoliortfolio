@@ -1,4 +1,5 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
+import axios from "axios";
 
 
 export default class PortfolioForm extends Component {
@@ -12,7 +13,7 @@ export default class PortfolioForm extends Component {
             position: "",
             url: "",
             thumb_image: "",
-            bannner_im: "",
+            bannner_image: "",
             logo: ""
         }
 
@@ -29,8 +30,6 @@ export default class PortfolioForm extends Component {
         formData.append("portfolio_item[description]", this.state.description)
         formData.append("portfolio_item[category]", this.state.category)
         formData.append("portfolio_item[url]", this.state.url);
-        formData.append("portfolio_item[position]", this.state.position)
-
 
 
         return formData;
@@ -47,16 +46,7 @@ export default class PortfolioForm extends Component {
 
 
     handleSubmit(event) {
-        
-        axios.post("https://damiangaleano.devcamp.space/portfolio/portfolio_items", this.buildForm(), {withCredential: true}).then
-        (response => {
-            console.log('response', response)
-            .catch((err) => {
-                console.log("Some Error", err)
-            });
-        }
-
-        )
+        this.buildForm();
         event.preventDefault();
     }
 
@@ -75,8 +65,6 @@ export default class PortfolioForm extends Component {
                         />
 
 
-
-
                         <input
                             type="text"
                             name="url"
@@ -84,7 +72,6 @@ export default class PortfolioForm extends Component {
                             value={this.state.url}
                             onChange={this.handleChange}
                         />
-
 
                         <input
                             type="text"
@@ -109,7 +96,6 @@ export default class PortfolioForm extends Component {
                             value={this.state.category}
                             onChange={this.handleChange}
                         />
-
 
                     </div>
                     <div>
