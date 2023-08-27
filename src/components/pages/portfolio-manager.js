@@ -1,116 +1,65 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-export default class PortfolioForm extends Component {
-  constructor(props) {
-    super(props);
+import PortfolioSidebarList from "../portfolio/portfolio-sidebar-list";
+import PortfolioForm from "../portfolio/portfolio-form";
+
+export default class PortfolioManager extends Component {
+  constructor() {
+    super();
 
     this.state = {
-      name: "",
-      description: "",
-      category: "",
-      position: "",
-      url: "",
-      thumb_image: "",
-      banner_image: "",
-      logo: ""
+      portfolioItems: []
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSuccessfulFormSubmission = this.handleSuccessfulFormSubmission.bind(
+      this
+    );
+    this.handleFormSubmissionError = this.handleFormSubmissionError.bind(this);
   }
 
-  buildForm() {
-    let formData = new FormData();
-
-    formData.append("portfolio_item[name]", this.state.name);
-    formData.append("portfolio_item[description]", this.state.description);
-    formData.append("portfolio_item[url]", this.state.url);
-    formData.append("portfolio_item[category]", this.state.category);
-    formData.append("portfolio_item[position]", this.state.position);
-
-    return formData;
+  handleSuccessfulFormSubmission(portfolioItem) {
+    // TODO
+    // update the portfolioItems state
+    // and add the portfolioItem to the list
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+  handleFormSubmissionError(error) {
+    console.log("handleFormSubmissionError error", error);
   }
 
-  handleSubmit(event) {
+  getPortfolioItems() {
     axios
-      .post(
-        "https://damiangaleano.devcamp.space/portfolio/portfolio_items",
-        this.buildForm(),
-        { withCredentials: true }
-      )
+      .get("https://damiangaleano.devcamp.space/portfolio/portfolio_items", {
+        withCredentials: true
+      })
       .then(response => {
-        console.log("response", response);
+        this.setState({
+          portfolioItems: [...response.data.portfolio_items]
+        });
       })
       .catch(error => {
-        console.log("portfolio form handleSubmit error", error);
+        console.log("error in getPortfolioItems", error);
       });
+  }
 
-    event.preventDefault();
+  componentDidMount() {
+    this.getPortfolioItems();
   }
 
   render() {
     return (
-      <div>
-        <h1>PortfolioForm</h1>
+      <div className="portfolio-manager-wrapper">
+        <div className="left-column">
+          <PortfolioForm
+            handleSuccessfulFormSubmission={this.handleSuccessfulFormSubmission}
+            handleFormSubmissionError={this.handleFormSubmissionError}
+          />
+        </div>
 
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Portfolio Item Name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-
-            <input
-              type="text"
-              name="url"
-              placeholder="URL"
-              value={this.state.url}
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              name="position"
-              placeholder="Position"
-              value={this.state.position}
-              onChange={this.handleChange}
-            />
-
-            <input
-              type="text"
-              name="category"
-              placeholder="Category"
-              value={this.state.category}
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={this.state.description}
-              onChange={this.handleChange}
-            />
-          </div>
-
-          <div>
-            <button type="submit">Save</button>
-          </div>
-        </form>
+        <div className="right-column">
+          <PortfolioSidebarList data={this.state.portfolioItems} />
+        </div>
       </div>
     );
   }
