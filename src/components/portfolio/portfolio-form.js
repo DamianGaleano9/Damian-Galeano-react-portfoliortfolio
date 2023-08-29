@@ -9,7 +9,7 @@ export default class PortfolioForm extends Component {
         this.state = {
             name: "",
             description: "",
-            category: "",
+            category: "eCommerce",
             position: "",
             url: "",
             thumb_image: "",
@@ -47,15 +47,15 @@ export default class PortfolioForm extends Component {
 
 
     handleSubmit(event) {
-        axios.post("https://damiangaleano.devcamp.space/portfolio/portfolio_items", this.buildForm(), {withCredentials:true})
-        .then(response => {
-            console.log("response", response)
-        })
-        .catch(error => {
-            console.log('An error ocurred', error);
-            
-        })
-        ;
+        axios.post("https://damiangaleano.devcamp.space/portfolio/portfolio_items"
+            , this.buildForm(), { withCredentials: true })
+            .then(response => {
+                this.props.handleSuccessfulFormSubmission(response.data.portfolio_item)
+            })
+            .catch(error => {
+                console.log('An error ocurred', error);
+
+            });
         event.preventDefault();
     }
 
@@ -63,6 +63,7 @@ export default class PortfolioForm extends Component {
         return (
             <div>
                 <h1>PortfolioForm</h1>
+
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <input
@@ -81,20 +82,14 @@ export default class PortfolioForm extends Component {
                             value={this.state.url}
                             onChange={this.handleChange}
                         />
+                    </div>
 
+                    <div>
                         <input
                             type="text"
                             name="position"
                             placeholder="Position"
                             value={this.state.position}
-                            onChange={this.handleChange}
-                        />
-
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="Description"
-                            value={this.state.description}
                             onChange={this.handleChange}
                         />
 
@@ -107,17 +102,26 @@ export default class PortfolioForm extends Component {
                         >
 
                             <option value="ecommerce">eCommerce</option>
-                            <option value="scheduling">Scheduling</option>
-                            <option value="ecommerce">eCommerce</option>
+                            <option value="Scheduling">Scheduling</option>
+                            <option value="Enterprise">Enterprise</option>
                         </select>
-
                     </div>
+
+                    <div>
+                        <textarea
+                            type="text"
+                            name="description"
+                            placeholder="Description"
+                            value={this.state.description}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+
                     <div>
                         <button type="Submit">Save</button>
                     </div>
                 </form>
             </div>
-        )
+        );
     }
-
 }
