@@ -13,6 +13,13 @@ import PortfolioDetail from "./portfolio/portfolio-detail";
 import Auth from "./pages/auth";
 import NoMatch from "./pages/no-match";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+
+
+library.add(faTrash, faSignOutAlt )
+
 export default class App extends Component {
   constructor(props) {
     super(props);
