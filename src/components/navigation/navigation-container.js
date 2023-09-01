@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 import { withRouter } from "react-router-dom";
 import { NavLink } from "react-router-dom";
