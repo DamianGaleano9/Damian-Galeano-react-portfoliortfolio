@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import DropzoneComponent from "react-dropzone-component";
 
-
 import "../../../node_modules/react-dropzone-component/styles/filepicker.css";
 import "../../../node_modules/dropzone/dist/min/dropzone.min.css";
 
@@ -18,7 +17,10 @@ export default class PortfolioForm extends Component {
       url: "",
       thumb_image: "",
       banner_image: "",
-      logo: ""
+      logo: "",
+      editMode: false,
+      apiUrl: "https://damiangaleano.devcamp.space/portfolio/portfolio_items",
+      apiAction: 'post'
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -32,6 +34,36 @@ export default class PortfolioForm extends Component {
     this.thumbRef = React.createRef();
     this.bannerRef = React.createRef();
     this.logoRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    if (Object.keys(this.props.portfolioToEdit).length > 0) {
+      const {
+        id,
+        name,
+        description,
+        category,
+        position,
+        url,
+        thumb_image_url,
+        banner_image_url,
+        logo_url,
+      } = this.props.portfolioToEdit;
+
+      this.props.clearPortfolioToEdit();
+
+      this.setState({
+        id: id,
+        name: name || "",
+        description: description || "",
+        category: category || "eCommerce",
+        position: position || "",
+        url: url || "",
+        editMode: true,
+        apiUrl: `https://damiangaleano.devcamp.space/portfolio/portfolio_items/${id}`,
+        apiAction: 'patch'
+      });
+    }
   }
 
   handleThumbDrop() {
@@ -98,13 +130,12 @@ export default class PortfolioForm extends Component {
   }
 
   handleSubmit(event) {
-    axios
-      .post(
-        "https://damiangaleano.devcamp.space/portfolio/portfolio_items",
-        this.buildForm(),
-        { withCredentials: true }
-      )
-      .then(response => {
+    axios({
+      method: this.state.apiAction,
+      url: this.state.apiUrl,
+      data: this.buildForm(),
+      withCredentials: true
+    }).then(response => {
         this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
 
         this.setState({
@@ -131,7 +162,7 @@ export default class PortfolioForm extends Component {
 
   render() {
     return (
-      <form className="portfolio-form-wrapper" onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="portfolio-form-wrapper">
         <div className="two-column">
           <input
             type="text"
@@ -171,7 +202,7 @@ export default class PortfolioForm extends Component {
           </select>
         </div>
 
-        <div>
+        <div className="one-column">
           <textarea
             type="text"
             name="description"
@@ -198,7 +229,6 @@ export default class PortfolioForm extends Component {
             eventHandlers={this.handleBannerDrop()}
           >
             <div className="dz-message">Banner</div>
-
           </DropzoneComponent>
 
           <DropzoneComponent
@@ -208,12 +238,13 @@ export default class PortfolioForm extends Component {
             eventHandlers={this.handleLogoDrop()}
           >
             <div className="dz-message">Logo</div>
-
           </DropzoneComponent>
         </div>
 
         <div>
-          <button type="submit">Save</button>
+          <button className="btn" type="submit">
+            Save
+          </button>
         </div>
       </form>
     );
