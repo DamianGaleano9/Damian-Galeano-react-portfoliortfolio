@@ -3,6 +3,22 @@
   justify-content: space-between;
   padding: 30px;
 
+
+  .right-side {
+    a {
+      margin-left: 15px;
+
+      &:hover {
+        color: $dark-teal;
+      }
+
+
+    }
+
+
+
+  }
+
   .left-side {
     display: flex;
   }
@@ -18,8 +34,12 @@
     a {
       color: $grey;
       text-decoration: none;
+      cursor: pointer;
+      color: $teal;
+      transition: ease-in-out;
+
       &:hover {
-        color: black;
+        color: $dark-teal;
       }
     }
 
