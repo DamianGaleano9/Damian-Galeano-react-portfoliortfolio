@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const PortfolioSidebarList = props => {
-  console.log(props.data)
+
   const portfolioList = props.data.map(portfolioItem => {
     return (
       <div key={portfolioItem.id} className="portfolio-item-thumb">
@@ -12,8 +12,6 @@ const PortfolioSidebarList = props => {
         </div>
 
         <div className="text-content">
-
-
           <div className="title">{portfolioItem.name}</div>
 
           <div className="actions">

@@ -136,23 +136,30 @@ export default class PortfolioForm extends Component {
       data: this.buildForm(),
       withCredentials: true
     }).then(response => {
-        this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
+      if (this.state.editMode) {
+        this.props.handleEditFormSubmission();
+      } else {
+        this.props.handleNewFormSubmission(response.data.portfolio_item);
+      }
 
-        this.setState({
-          name: "",
-          description: "",
-          category: "eCommerce",
-          position: "",
-          url: "",
-          thumb_image: "",
-          banner_image: "",
-          logo: ""
-        });
+      this.setState({
+        name: "",
+        description: "",
+        category: "eCommerce",
+        position: "",
+        url: "",
+        thumb_image: "",
+        banner_image: "",
+        logo: "",
+        editMode: false,
+        apiUrl: "https://damiangaleano.devcamp.space/portfolio/portfolio_items",
+        apiAction: 'post'
+      });
 
-        [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
-          ref.current.dropzone.removeAllFiles();
-        });
-      })
+      [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
+        ref.current.dropzone.removeAllFiles();
+      });
+    })
       .catch(error => {
         console.log("portfolio form handleSubmit error", error);
       });
