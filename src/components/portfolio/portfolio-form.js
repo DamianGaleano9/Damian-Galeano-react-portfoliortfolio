@@ -30,10 +30,17 @@ export default class PortfolioForm extends Component {
     this.handleThumbDrop = this.handleThumbDrop.bind(this);
     this.handleBannerDrop = this.handleBannerDrop.bind(this);
     this.handleLogoDrop = this.handleLogoDrop.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
 
     this.thumbRef = React.createRef();
     this.bannerRef = React.createRef();
     this.logoRef = React.createRef();
+  }
+
+
+  deleteImage(imageType) {
+    console.log('Delete image', imageType);
+
   }
 
   componentDidUpdate() {
@@ -62,9 +69,9 @@ export default class PortfolioForm extends Component {
         editMode: true,
         apiUrl: `https://damiangaleano.devcamp.space/portfolio/portfolio_items/${id}`,
         apiAction: 'patch',
-        thumb_image: thumb_image_url || "",
-        banner_image: banner_image_url || "",
-        logo: logo_url || "",
+        thumb_image_url: thumb_image_url || "",
+        banner_image_url: banner_image_url || "",
+        logo_url: logo_url || "",
       });
     }
   }
@@ -157,7 +164,7 @@ export default class PortfolioForm extends Component {
         editMode: false,
         apiUrl: "https://damiangaleano.devcamp.space/portfolio/portfolio_items",
         apiAction: 'post',
-        
+
       });
 
       [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
@@ -224,8 +231,20 @@ export default class PortfolioForm extends Component {
         </div>
 
         <div className="image-uploaders">
-          {this.state.thumb_image && this.state.editMode ?
-           (<img src={this.state.thumb_image}/>): (
+
+          {this.state.thumb_image_url && this.state.editMode ? (
+            <div className="portfolio-manager-image-wrapper">
+              <img src={this.state.thumb_image_url} />
+
+              <div className="image-removal-link">
+                <a onClick={() => this.deleteImage("thumb_image")}>
+                  Remove file
+                </a>
+
+              </div>
+
+            </div>
+          ) : (
 
             <DropzoneComponent
               ref={this.thumbRef}
@@ -239,23 +258,53 @@ export default class PortfolioForm extends Component {
 
 
 
-          <DropzoneComponent
-            ref={this.bannerRef}
-            config={this.componentConfig()}
-            djsConfig={this.djsConfig()}
-            eventHandlers={this.handleBannerDrop()}
-          >
-            <div className="dz-message">Banner</div>
-          </DropzoneComponent>
+          {this.state.banner_image_url && this.state.editMode ? (
+            <div className="portfolio-manager-image-wrapper">
+              <img src={this.state.banner_image} />
 
-          <DropzoneComponent
-            ref={this.logoRef}
-            config={this.componentConfig()}
-            djsConfig={this.djsConfig()}
-            eventHandlers={this.handleLogoDrop()}
-          >
-            <div className="dz-message">Logo</div>
-          </DropzoneComponent>
+              <div className="image-removal-link">
+                <a onClick={() => this.deleteImage("banner_image_url")}>
+                  Remove file
+                </a>
+
+              </div>
+            </div>
+          ) : (
+
+            <DropzoneComponent
+              ref={this.bannerRef}
+              config={this.componentConfig()}
+              djsConfig={this.djsConfig()}
+              eventHandlers={this.handleBannerDrop()}
+            >
+              <div className="dz-message">Banner</div>
+            </DropzoneComponent>
+
+          )}
+
+          {this.state.logo_url && this.state.editMode ? (
+            <div className="portfolio-manager-image-wrapper">
+              <img src={this.state.logo} />
+
+              <div className="image-removal-link">
+                <a onClick={() => this.deleteImage("logo_url")}>
+                  Remove file
+                </a>
+
+              </div>
+
+            </div>
+          ) : (
+            <DropzoneComponent
+              ref={this.logoRef}
+              config={this.componentConfig()}
+              djsConfig={this.djsConfig()}
+              eventHandlers={this.handleLogoDrop()}
+            >
+              <div className="dz-message">Logo</div>
+            </DropzoneComponent>
+
+          )}
         </div>
 
         <div>
