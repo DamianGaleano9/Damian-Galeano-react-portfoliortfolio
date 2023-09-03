@@ -7,37 +7,44 @@ class Blog extends Component {
     constructor() {
         super();
 
-    this.state = {
-        blogItems: []
-    }
-    
-    this.getBlogItems = this.getBlogItems.bind(this);
+        this.state = {
+            blogItems: []
+        }
+
+        this.getBlogItems = this.getBlogItems.bind(this);
     }
 
 
     getBlogItems() {
-        axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", {withCredentials: true}).
-        then(response => {
-            this.setState({
-                blogItems: response.data.portfolio_blogs
+        axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", { withCredentials: true }).
+            then(response => {
+                this.setState({
+                    blogItems: response.data.portfolio_blogs
+                })
+            }
+            ).catch(error => {
+                console.log('Response', error);
             })
-        }
-        ).catch(error => {
-            console.log('Response', error);
-        })
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.getBlogItems();
     }
 
 
     render() {
         const blogRecords = this.state.blogItems.map(blogItem => {
-            return <BlogItem key={blogItem.id} blogItem={blogItem}/>
+            return <BlogItem key={blogItem.id} blogItem={blogItem} />
         });
 
-        return <div>{blogRecords}</div>
+        return (
+            <div className="blog-container">
+                <div className="content-container">
+                    {blogRecords}
+                </div>
+            </div>
+
+        )
     }
 
 }
