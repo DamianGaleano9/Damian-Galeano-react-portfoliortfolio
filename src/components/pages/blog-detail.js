@@ -44,7 +44,7 @@ export default class BlogDetail extends Component {
 
         return (
             <div className="blog-container">
-                <div content-container>
+                <div className="content-container">
                     <h1>{title}</h1>
 
 

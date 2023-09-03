@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BlogItem from "../blog/blog-item";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Blog extends Component {
     constructor() {
@@ -11,6 +12,7 @@ class Blog extends Component {
             blogItems: [],
             totalCount: 0,
             currentPage: 0,
+            isLoading: false
 
         }
 
@@ -31,11 +33,13 @@ class Blog extends Component {
       }
 
     getBlogItems() {
+        this.setState({currentPage: this.state.currentPage + 1});
         axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", { withCredentials: true }).
             then(response => {
                 this.setState({
                     blogItems: response.data.portfolio_blogs,
-                    currentPage : response.data.total_records
+                    currentPage : response.data.total_records,
+                    isLoading: true
                 })
             }
             ).catch(error => {
@@ -55,6 +59,7 @@ class Blog extends Component {
 
         return (
             <div className="blog-container">
+                <FontAwesomeIcon icon="fa-solid fa-spinner" spin/>
                 <div className="content-container">
                     {blogRecords}
                 </div>

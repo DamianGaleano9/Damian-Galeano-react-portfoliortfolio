@@ -17,7 +17,7 @@ import NoMatch from "./pages/no-match";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
-import { faTrash, faSignOutAlt, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 
 library.add(faTrash, faSignOutAlt, fas)
