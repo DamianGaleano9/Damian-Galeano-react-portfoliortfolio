@@ -12,16 +12,20 @@ class Blog extends Component {
         }
 
         this.getBlogItems = this.getBlogItems.bind(this);
-        this.activeInfiniteScroll();
+        this.activateInfiniteScroll();
     }
 
 
-    activeInfiniteScroll(){
-        window.onscroll = () =>{
-            console.log('Scrolling...');
-            
-        }
-    }
+    activateInfiniteScroll() {
+        window.onscroll = () => {
+          if (
+            window.innerHeight + document.documentElement.scrollTop ===
+            document.documentElement.offsetHeight
+          ) {
+            console.log("get more posts");
+          }
+        };
+      }
 
     getBlogItems() {
         axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", { withCredentials: true }).
