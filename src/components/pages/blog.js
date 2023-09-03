@@ -12,8 +12,16 @@ class Blog extends Component {
         }
 
         this.getBlogItems = this.getBlogItems.bind(this);
+        this.activeInfiniteScroll();
     }
 
+
+    activeInfiniteScroll(){
+        window.onscroll = () =>{
+            console.log('Scrolling...');
+            
+        }
+    }
 
     getBlogItems() {
         axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", { withCredentials: true }).
