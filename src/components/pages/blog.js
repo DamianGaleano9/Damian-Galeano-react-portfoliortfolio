@@ -12,7 +12,7 @@ class Blog extends Component {
             blogItems: [],
             totalCount: 0,
             currentPage: 0,
-            isLoading: false
+            isLoading: true
 
         }
 
@@ -23,34 +23,33 @@ class Blog extends Component {
 
     activateInfiniteScroll() {
         window.onscroll = () => {
-          if (
-            window.innerHeight + document.documentElement.scrollTop ===
-            document.documentElement.offsetHeight
-          ) {
-            console.log("get more posts");
-          }
+            if (
+                window.innerHeight + document.documentElement.scrollTop ===
+                document.documentElement.offsetHeight
+            ) {
+                console.log("get more posts");
+            }
         };
-      }
+    }
 
     getBlogItems() {
-        this.setState({currentPage: this.state.currentPage + 1});
+        this.setState({ currentPage: this.state.currentPage + 1 });
         axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", { withCredentials: true }).
             then(response => {
                 this.setState({
                     blogItems: response.data.portfolio_blogs,
-                    currentPage : response.data.total_records,
-                    isLoading: true
+                    currentPage: response.data.total_records,
+                    isLoading: false
                 })
             }
             ).catch(error => {
-                console.log('Response', error);
+                console.log('getBlogItems error', error);
             })
     }
 
     componentWillMount() {
         this.getBlogItems();
     }
-
 
     render() {
         const blogRecords = this.state.blogItems.map(blogItem => {
@@ -59,13 +58,14 @@ class Blog extends Component {
 
         return (
             <div className="blog-container">
-                <FontAwesomeIcon icon="fa-solid fa-spinner" spin/>
-                <div className="content-container">
-                    {blogRecords}
-                </div>
-            </div>
+                <div className="content-container">{blogRecords}</div>
 
-        )
+                {this.state.isLoading ? (<div className="content-loader">
+                    <FontAwesomeIcon icon="fa-solid fa-spinner" spin />
+                </div>): null}
+                
+            </div>
+        );
     }
 
 }
