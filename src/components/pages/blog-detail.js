@@ -9,32 +9,48 @@ export default class BlogDetail extends Component {
 
         this.state = {
             currentId: this.props.match.params.slug,
+            blogItem: {}
         }
     }
 
 
-    getBlogItem(){
+    getBlogItem() {
         axios.get(`https://damiangaleano.devcamp.space/portfolio/portfolio_blogs/${this.state
-        .currentId}`).
-        then(response => {
-            console.log('response', response);
+            .currentId}`).
+            then(response => {
+                this.setState({
+                    blogItem: response.data.portfolio_blog
+                })
 
-        }).catch(error =>{
-                console.log('Errorr', error);
+            }).catch(error => {
+                console.log('getBlogItem error', error);
             })
     }
 
-
-    componentDidMount(){
+    componentDidMount() {
         this.getBlogItem();
     }
-    
+
 
     render() {
-        console.log('Response from', this.state.currentId);
+        const {
+            title,
+            content,
+            featured_image_url,
+            blog_status
+        } = this.state.blogItem;
+
+
 
         return (
-            <h1>BlogDetail</h1>
+            <div>
+                <h1>{title}</h1>
+                <img src={featured_image_url} />
+                <div>
+                    <h1>{content}</h1>
+                </div>
+            </div>
+
         )
     }
 }
