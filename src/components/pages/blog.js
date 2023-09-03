@@ -8,7 +8,10 @@ class Blog extends Component {
         super();
 
         this.state = {
-            blogItems: []
+            blogItems: [],
+            totalCount: 0,
+            currentPage: 0,
+
         }
 
         this.getBlogItems = this.getBlogItems.bind(this);
@@ -31,7 +34,8 @@ class Blog extends Component {
         axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", { withCredentials: true }).
             then(response => {
                 this.setState({
-                    blogItems: response.data.portfolio_blogs
+                    blogItems: response.data.portfolio_blogs,
+                    currentPage : response.data.total_records
                 })
             }
             ).catch(error => {
