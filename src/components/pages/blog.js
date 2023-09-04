@@ -17,28 +17,31 @@ class Blog extends Component {
         }
 
         this.getBlogItems = this.getBlogItems.bind(this);
-        this.activateInfiniteScroll();
-    }
+        this.onScroll = this.onScroll.bind(this);
+        window.addEventListener("scroll", this.onScroll, false);
+    }   
 
 
-    activateInfiniteScroll() {
-        window.onscroll = () => {
+    onScroll() {
+            if(this.state.isLoading || this.state.blogItems.length === this.state.totalCount) {
+                 return;  
+            }
+
             if (
                 window.innerHeight + document.documentElement.scrollTop ===
                 document.documentElement.offsetHeight
             ) {
-                console.log("get more posts");
+                this.getBlogItems();
             }
-        };
     }
 
     getBlogItems() {
         this.setState({ currentPage: this.state.currentPage + 1 });
-        axios.get("https://damiangaleano.devcamp.space/portfolio/portfolio_blogs", { withCredentials: true }).
+        axios.get(`https://damiangaleano.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`, { withCredentials: true }).
             then(response => {
                 this.setState({
-                    blogItems: response.data.portfolio_blogs,
-                    currentPage: response.data.total_records,
+                    blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
+                    totalCount: response.data.meta.total_records,
                     isLoading: false
                 })
             }
@@ -49,6 +52,11 @@ class Blog extends Component {
 
     componentWillMount() {
         this.getBlogItems();
+    }
+
+
+    componentWillUnmount(){
+        this.removeEventListener('scroll', this.onScroll, false);
     }
 
     render() {
