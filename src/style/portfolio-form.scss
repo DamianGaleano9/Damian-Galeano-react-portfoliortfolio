@@ -1,16 +1,4 @@
-.portfolio-form-wrapper {
-    @include base-grid();
-    grid-template-columns: 1fr;
-    padding: 42px;
-
-    @include input-element();
-
-    input {
-        margin-bottom: 0px;
-    }
-
-
-    .image-uploaders {
+.image-uploaders {
         @include base-grid();
         grid-template-columns: 200px 200px 200px;
 
@@ -45,4 +33,3 @@
         }
 
     }
-}

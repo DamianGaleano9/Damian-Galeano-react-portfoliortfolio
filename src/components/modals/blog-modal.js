@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactModal from "react-modal";
-import BlogForm from "../blog/blog-fomr";
+
+import BlogForm from "../blog/blog-form";
 
 
 ReactModal.setAppElement('.app-wrapper')
@@ -32,7 +33,7 @@ export default class BlogModal extends Component {
 
     
     handleSuccessfullFormSubmission(blog) {
-        console.log('blog', blog);
+        this.props.handleSuccessfullNewBlogSubmission(blog);
         
     }
 
@@ -44,7 +45,8 @@ export default class BlogModal extends Component {
 
             }} isOpen={this.props.modalIsOpen}>
                 <h1>I'm in a modal!</h1>
-                <BlogForm handleSuccessfullFormSubmission={this.handleSuccessfullFormSubmission}/>
+                <BlogForm
+                handleSuccessfullFormSubmission={this.handleSuccessfullFormSubmission}/>
 
             </ReactModal>
         );
